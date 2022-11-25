@@ -1,4 +1,11 @@
-
+def convert(s):
+    listed = []
+    tupled = ()
+    if s[0].isalpha():
+        tupled=(*tupled,str(ord(s[0].upper())-65),s[1])
+        listed.append(tupled)
+    return listed
+#print(convert("A2"))
 class Star_Cinema:
     def __init__(self):
         self.hall_list = []
@@ -37,24 +44,21 @@ class Hall(Star_Cinema):
 
     def book_seats(self, person_name, phone_no, id, seat_no):
         a=self.entry_show()
-        r,c=seat_no.split(",")
+        r,c=seat_no[0]
         if (id == a[0][0]):
-            self.seats[id][int(r)][int(c)] = '\033[1m' + 'X' + '\033[0m'
+            self.seats[id][int(r)][int(c)] = '\033[1m' + '\033[31m' +'X' + '\033[0m'
             return (self.seats[id])
         elif (id == a[1][0]):
-            self.seats[id][int(r)][int(c)] = '\033[1m' + 'X' + '\033[0m'
+            self.seats[id][int(r)][int(c)] = '\033[1m' + '\033[31m' +'X' + '\033[0m'
             return (self.seats[id])
-        else:
-            print("Invalid ID")
 
     def view_show_list(self):
         a = self.entry_show()
-        print("Show ID","       " ,"Show Name","       " ,"Show Time")
-        print("-----------------------------------------------------")
+        print('\033[1m' + 'Movie Id' + '\033[0m',"       " ,'\033[1m' + 'Movie Name' + '\033[0m',"       " ,'\033[1m' + 'Time' + '\033[0m')
+        print("_____________________________________________________")
         for i in range(2):
             print(a[i][0],"          " ,a[i][1],"          " ,a[i][2])
-        print("-----------------------------------------------------")
-
+        print("_____________________________________________________")
 
     def view_available_seats(self,id):
         a = self.entry_show()
@@ -72,13 +76,11 @@ class Hall(Star_Cinema):
                     print("(",self.seats["sk0"][i][j],")", f"{chr(value)}{j}", end="            ")
                 print()
                 value += 1
-        else:
-            print("Invalid ID")
 
 def showreplica():
-    print("1.View all shows today")
-    print("2.View available tickets")
-    print("3.Book tickets")
+    print('\033[1m' + '\033[32m' + '1.View running show' + '\033[0m')
+    print('\033[1m' + '\033[32m' + '2.View available seats' + '\033[0m')
+    print('\033[1m' + '\033[32m' +'3.Book tickets' + '\033[0m')
 
 col=4
 row=3
@@ -86,40 +88,56 @@ hall_no="A10"
 hall = Hall(row, col, hall_no)
 hall.entry_show('ay0', 'Avengers', '10:00')
 hall.entry_show('sk0', 'Spiderman', '12:00')
+print(hall.seats)
+print(convert("A2")[0])
 
 while True:
     showreplica()
-    a=input("Enter option : ")
+    a=input('\033[1m' + 'Enter your choice:' + '\033[0m')
+    print()
     if(a=="1"):
         hall.view_show_list()
     elif(a=="2"):
         id = input("Enter show id : ")
+        while id not in hall.show_list[0] and id not in hall.show_list[1]:
+            print('\033[31m'+'\033[1m' + 'INVALID SHOW ID.PLEASE SELECT AGAIN.' + '\033[0m')
+            id = input("Enter show id : ")
         print("_"*20*col)
         if (id == hall.show_list[0][0]):
-            print(f"Movie name: {hall.show_list[0][1]}        Time: {hall.show_list[0][2]}")
-            print("x for already booked seats")
+            print(f"\033[1m Movie Name : \033[0m {hall.show_list[0][1]}        \033[1m Time : \033[0m {hall.show_list[0][2]}")
+            print('\033[1m' + '\033[31m' +'X' + '\033[0m' + " for already Booked Seats.")
             hall.view_available_seats(id)
         elif (id == hall.show_list[1][0]):
-            print(f"Movie name: {hall.show_list[1][1]}        Time: {hall.show_list[1][2]}")
-            print("x for already booked seats")
+            print(f"\033[1m Movie Name : \033[0m {hall.show_list[1][1]}       \033[1m Time : \033[0m {hall.show_list[1][2]}")
+            print('\033[1m' + '\033[31m' +'X' + '\033[0m' + " for already Booked Seats.")
             hall.view_available_seats(id)
         print("_"*20*col)
     elif(a=="3"):
         name = input("Enter name : ")
         phone = input("Enter phone no : ")
         id = input("Enter show id : ")
-        hall.view_available_seats(id)
+        while id not in hall.show_list[0] and id not in hall.show_list[1]:
+            print('\033[31m'+'\033[1m' + 'Invalid show id.please select again.' + '\033[0m')
+            id = input("Enter show id : ")
+        #hall.view_available_seats(id)
         no_of_seats = int(input("Enter no of seats : "))
         seat_list = []
         for i in range(no_of_seats):
-            seat_no = input("Enter seat no : ")
+            seat= input("Enter seat no : ")
+            while int(convert(seat)[0][0])>=row or int(convert(seat)[0][0])<0 or int(convert(seat)[0][1])>=col or int(convert(seat)[0][1])<0:
+                print('\033[31m'+'\033[1m' + 'Invalid seat.please select again.' + '\033[0m')
+                seat= input("Enter seat no : ")
+            while seat in seat_list:
+                print('\033[31m'+'\033[1m' + 'Seat already booked.please try again.' + '\033[0m')
+                seat = input("Enter seat no : ")
+            seat_no = convert(seat)
             hall.book_seats(name, phone, id, seat_no)
-            seat_list.append(seat_no)
-            print("_" * 20 * col)
-            hall.view_available_seats(id)
-            print("_" * 20 * col)
-        print("Tickets booked successfully")
-        print("Thank you for booking with us")
+            seat_list.append(seat)
+            #print("_" * 20 * col)
+            #hall.view_available_seats(id)
+            #print("_" * 20 * col)
+        print('\033[92m'+'\033[1m' + 'Tickets booked successfully' + '\033[0m')
+        print('\033[92m'+'\033[1m' + 'Thank you & Enjoy' + '\033[0m')
         print("_"*50)
         print("Name : ",name)
         print("Phone no : ",phone)
@@ -135,4 +153,5 @@ while True:
         print("Hall no : ",hall.hall_no)
         print("_"*50)
     else:
-        print("Invalid option")
+        print('\033[31m'+'\033[1m' + 'Invalid option.Please select again.' + '\033[0m')
+        print()
