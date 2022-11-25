@@ -67,55 +67,56 @@ class Hall(Star_Cinema):
             for i in range(3):
                 print(self.seats["sk0"][1][i], end="       ")
 
-def showreplica():
-    print("1.View all shows today")
-    print("2.View available tickets")
-    print("3.Book tickets")
+while True:
+    def showreplica():
+        print("1.View all shows today")
+        print("2.View available tickets")
+        print("3.Book tickets")
 
 
-hall1=Hall(1, 2, 3).entry_show()
-print(hall1)
-hall2=Hall(1, 2, 3).book_seats("hf", "33", "ay0")
-hall3=Hall(1,2,3).view_show_list()
-
-showreplica()
-a=input("Enter option : ")
-if(a=="1"):
+    hall1 = Hall(1, 2, 3).entry_show()
+    print(hall1)
+    hall2 = Hall(1, 2, 3).book_seats("hf", "33", "ay0")
     hall3 = Hall(1, 2, 3).view_show_list()
-elif(a=="2"):
-    b=input("Enter show id :")
-    if(b=="ay0"):
-        print(f"Movie name : Aynabazi                      Time : 12 ta")
-        print("X for already booked seats")
-    elif(b=="sk0"):
-        print(f"Movie name : Skyfall                       Time : 12 ta")
-        print("X for already booked seats")
-    print("------------------------------------------------------------------------------")
-    hall3 = Hall(1, 2, 3).view_available_seats(b)
-    print()
-    print("------------------------------------------------------------------------------")
-elif(a=="3"):
-    customer_name=input("Enter customer name : ")
-    phone_no=input("Enter phone no : ")
-    len_phone=len(phone_no)
-    show_id=input("Enter show id : ")
-    no_of_ticket=int(input("No of ticket : "))
-    seat_list = []
-    for i in range(no_of_ticket):
-        seat_no=input("Seat no : ")
-        seat_list.append(seat_no)
 
-    print("Ticket booked successfully")
-    print("------------------------------------------------------------------------------")
-    print("customer name : " + customer_name)
-    print("Phone number : " + phone_no[0] + phone_no[1] + (len_phone-2)*("*"))
-    if (show_id == "ay0"):
-        print(f"Movie name : Aynabazi                      Time : 12 ta")
-    elif (show_id == "sk0"):
-        print(f"Movie name : Skyfall                       Time : 12 ta")
-    print("Tickets : ",end="")
-    for i in range(no_of_ticket):
-        print(seat_list[i],end=" ")
-    print()
-    print("Hall : A10")
-    print("------------------------------------------------------------------------------")
+    showreplica()
+    a = input("Enter option : ")
+    if (a == "1"):
+        hall3 = Hall(1, 2, 3).view_show_list()
+    elif (a == "2"):
+        b = input("Enter show id :")
+        if (b == "ay0"):
+            print(f"Movie name : Aynabazi                      Time : 12 ta")
+            print("X for already booked seats")
+        elif (b == "sk0"):
+            print(f"Movie name : Skyfall                       Time : 12 ta")
+            print("X for already booked seats")
+        print("------------------------------------------------------------------------------")
+        hall3 = Hall(1, 2, 3).view_available_seats(b)
+        print()
+        print("------------------------------------------------------------------------------")
+    elif (a == "3"):
+        customer_name = input("Enter customer name : ")
+        phone_no = input("Enter phone no : ")
+        len_phone = len(phone_no)
+        show_id = input("Enter show id : ")
+        no_of_ticket = int(input("No of ticket : "))
+        seat_list = []
+        for i in range(no_of_ticket):
+            seat_no = input("Seat no : ")
+            seat_list.append(seat_no)
+
+        print("Ticket booked successfully")
+        print("------------------------------------------------------------------------------")
+        print("customer name : " + customer_name)
+        print("Phone number : " + phone_no[0] + phone_no[1] + (len_phone - 2) * ("*"))
+        if (show_id == "ay0"):
+            print(f"Movie name : Aynabazi                      Time : 12 ta")
+        elif (show_id == "sk0"):
+            print(f"Movie name : Skyfall                       Time : 12 ta")
+        print("Tickets : ", end="")
+        for i in range(no_of_ticket):
+            print(seat_list[i], end=" ")
+        print()
+        print("Hall : A10")
+        print("------------------------------------------------------------------------------")

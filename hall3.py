@@ -22,11 +22,8 @@ class Hall(Star_Cinema):
     def __repr__(self):
         return f"{self.rows} {self.cols} {self.hall_no}"
 
-    def entry_show(self):
-        self.movie1 = ("ay0", "Aynabazi", "12ta")
-        self.movie2 = ("sk0", "Skyfall", "12ta")
-        self.show_list.append(self.movie1)
-        self.show_list.append(self.movie2)
+    def entry_show(self, id_show=0, name_show=0, time_show=0):
+        self.show_list.append([id_show, name_show, time_show])
         return self.show_list
 
     def book_seats(self, person_name, phone_no, id_show,seat_no):
@@ -66,14 +63,9 @@ class Hall(Star_Cinema):
 
 
     def view_show_list(self):
-        b = self.entry_show()
-        print("------------------------------------------------------------------------------")
-        print("running these shows successfully:")
-        print("")
-        #print("______________________________________________________________________________")
-        print(f"Movie name: {b[0][1]}       Movie id : {b[0][0]}         Time: {b[0][2]}")
-        print(f"Movie name: {b[1][1]}        Movie id : {b[1][0]}         Time: {b[1][2]}")
-        print("------------------------------------------------------------------------------")
+        a = self.entry_show()
+        for i in range(2):
+            print(a[i][0],"       " a[i][1], "       " a[i][2])
 
 
     def view_available_seats(self,id):
@@ -99,15 +91,15 @@ def showreplica():
     print("3.Book tickets")
 
 
-"""hall1=Hall(1, 2, 3).entry_show()
-print(hall1)
-#hall2=Hall(1, 2, 3).book_seats("hf", "33", "ay0")
-hall3=Hall(1,2,3).view_show_list()"""
+hall = Hall(1, 2, 3)
+hall.entry_show('ay0', 'Avengers', '10:00')
+hall.entry_show('sk0', 'Spiderman', '12:00')
+
 for j in range(4):
     showreplica()
     a=input("Enter option : ")
     if(a=="1"):
-        hall3 = Hall(1, 2, 3).view_show_list()
+        hall.view_show_list()
     elif(a=="2"):
         b=input("Enter show id :")
         if(b=="ay0"):
