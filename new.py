@@ -4,11 +4,9 @@ def convert(s):
     num = ""
     if s[0].isalpha() and s[1:].isdigit():
         for i in range(1, len(s)):
-            #print(i)
             num += s[i]
         tupled = (*tupled, str(ord(s[0].upper())-65), num)
         listed.append(tupled)
-        #print(num)
     return listed
 
 
@@ -75,7 +73,6 @@ class Hall(Star_Cinema):
                     print("(", self._seats["ay0"][i][j], ")", f"\033[1m{chr(value)}{j}\033[0m", end="            ")
                 print()
                 value += 1
-            #print(self.seats["ay0"])
         elif id == a[1][0]:
             for i in range(self._rows):
                 for j in range(self._cols):
@@ -90,8 +87,8 @@ def showreplica():
     print('\033[1m' + '\033[34m' + '3.Book tickets' + '\033[0m')
 
 
-col = 4
 row = 5
+col = 4
 hall_no = "A10"
 hall = Hall(row, col, hall_no)
 hall.entry_show('ay0', 'Avengers', '10:00')
@@ -135,7 +132,6 @@ while True:
         while id not in hall._show_list[0] and id not in hall._show_list[1]:
             print('\033[31m'+'\033[1m' + 'Invalid show id.please select again.' + '\033[0m')
             id = input("Enter show id : ")
-        #hall.view_available_seats(id)
         no_of_seats = int(input("Enter no of seats : "))
         while no_of_seats > (row*col)-(count_X(hall._seats, id)):
             print('\033[31m'+'\033[1m' + 'Unavailble no of tickets.Please try again' + '\033[0m')
